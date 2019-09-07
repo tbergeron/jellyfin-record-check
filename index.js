@@ -1,25 +1,10 @@
+// config
+require('./config');
+
 // selenium
-const {
-  Builder,
-  By,
-  until
-} = require('selenium-webdriver');
+const { Builder, By, until } = require('selenium-webdriver');
 // browser driver
 const firefox = require('selenium-webdriver/firefox');
-
-// logging
-const logging = true;
-// messages
-const recordingMsg    = `NE PAS REGARDER TV, EN COURS D'ENREGISTREMENT!!!`;
-const notRecordingMsg = `On peut regarder la TV yay! ;-)`;
-// interval
-const interval = (10*1000)
-// random
-const r = Math.floor(Math.random() * 1000);
-// url to check
-const url = `http://local.brainpad.org:8096/web/index.html?r=${r}#!/home.html`;
-// title to look for
-const titleToLookFor = 'Active Recordings';
 // xpath
 const xpath = `//*[text()='${titleToLookFor}']`;
 const by    = By.xpath(xpath);
