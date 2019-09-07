@@ -1,6 +1,5 @@
 // config
-require('./config');
-
+const { logging, recordingMsg, notRecordingMsg, url, interval, titleToLookFor } = require('./config');
 // selenium
 const { Builder, By, until } = require('selenium-webdriver');
 // browser driver
@@ -25,15 +24,11 @@ function check() {
     try {
       log('Fetching url...');
       await driver.get(url);
-
       log('Attemping to locate element...');
       await driver.wait(until.elementLocated(by));
-      
       // warn user if element exists
       if (await driver.findElement(By.xpath(xpath)).isDisplayed()) {
-
         log(`Element has been found! ${xpath}`);
-
         // remove old tray
         let t = getTrayObject();
         if (t) t.remove();
@@ -43,13 +38,9 @@ function check() {
         o.menu = getTrayMenu();
         // retain new tray object
         setTrayObject(o);
-
         log(`Cleaning old tray and creating new one (recording)...`);
-
       } else {
-
         log(`Element cannot be found... ${xpath}`);
-
         // remove old tray
         let t = getTrayObject();
         if (t) t.remove();
@@ -59,9 +50,7 @@ function check() {
         o.menu = getTrayMenu();
         // retain new tray object
         setTrayObject(o);
-
         log(`Cleaning old tray and creating new one (notRecording)...`);
-
       }
     } finally {
       log(`Discarding browser driver...`);
@@ -95,11 +84,11 @@ function getTrayMenu() {
 }
 
 // main timer loop
-function restartTimer() {
+function startTimer() {
   setTimeout(() => {
     check();
-    restartTimer();
-  }, interval);
+    startTimer();
+  }, interval * 1000);
 }
 
 // dirty log function
@@ -116,4 +105,4 @@ if (!logging) {
 }
 
 // start main loop
-restartTimer();
+startTimer();
