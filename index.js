@@ -106,5 +106,10 @@ function log(msg) {
   }
 }
 
+if (!logging) {
+  // hide main window
+  nw.Window.get().hide();
+}
+
 // start main loop
 startTimer();
