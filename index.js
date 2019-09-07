@@ -8,6 +8,11 @@ const firefox = require('selenium-webdriver/firefox');
 const xpath = `//*[text()='${titleToLookFor}']`;
 const by    = By.xpath(xpath);
 
+// just to keep it safe from infinite loops
+if (typeof interval === 'undefined') {
+  interval = 60;
+}
+
 // main check
 function check() {
   var start = new Date();
@@ -95,13 +100,10 @@ function startTimer() {
 function log(msg) {
   if (logging) {
     console.log(`log: ${msg}`);
-    document.write(`log: ${msg}<br/>`);
+    if (typeof document !== 'undefined') {
+      document.write(`log: ${msg}<br/>`);
+    }
   }
-}
-
-if (!logging) {
-  // hide main window
-  nw.Window.get().hide();
 }
 
 // start main loop

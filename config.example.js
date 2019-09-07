@@ -1,5 +1,5 @@
-exports = {
-  // logging
+module.exports = {
+  // logging (false will make it run headless)
   logging: true,
   // messages
   recordingMsg   : `Currently recording!`,
